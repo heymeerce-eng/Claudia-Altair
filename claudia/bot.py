@@ -26,10 +26,7 @@ app = Flask(__name__)
 
 
 def _is_allowed(from_number: str) -> bool:
-    profiles = get_all_profiles()
-    if not profiles:
-        return True
-    return from_number in profiles
+    return True
 
 
 def _twilio_client() -> Client:

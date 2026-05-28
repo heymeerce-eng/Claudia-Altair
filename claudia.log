@@ -1,0 +1,116 @@
+Fatal Python error: init_import_site: Failed to import the site module
+Python runtime state: initialized
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/site.py", line 621, in <module>
+    main()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/site.py", line 604, in main
+    known_paths = venv(known_paths)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/site.py", line 522, in venv
+    with open(virtual_conf, encoding='utf-8') as f:
+PermissionError: [Errno 1] Operation not permitted: '/Users/mercecardenal/Documents/Agente Personal/.venv/pyvenv.cfg'
+Fatal Python error: init_import_site: Failed to import the site module
+Python runtime state: initialized
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/site.py", line 621, in <module>
+    main()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/site.py", line 604, in main
+    known_paths = venv(known_paths)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/site.py", line 522, in venv
+    with open(virtual_conf, encoding='utf-8') as f:
+PermissionError: [Errno 1] Operation not permitted: '/Users/mercecardenal/Documents/Agente Personal/.venv/pyvenv.cfg'
+shell-init: error retrieving current directory: getcwd: cannot access parent directories: Operation not permitted
+/bin/bash: /Users/mercecardenal/Documents/Agente Personal/start_claudia.sh: Operation not permitted
+shell-init: error retrieving current directory: getcwd: cannot access parent directories: Operation not permitted
+/bin/bash: /Users/mercecardenal/Documents/Agente Personal/start_claudia.sh: Operation not permitted
+shell-init: error retrieving current directory: getcwd: cannot access parent directories: Operation not permitted
+/bin/bash: /Users/mercecardenal/Documents/Agente Personal/start_claudia.sh: Operation not permitted
+shell-init: error retrieving current directory: getcwd: cannot access parent directories: Operation not permitted
+/bin/bash: /Users/mercecardenal/Documents/Agente Personal/start_claudia.sh: Operation not permitted
+shell-init: error retrieving current directory: getcwd: cannot access parent directories: Operation not permitted
+/bin/bash: /Users/mercecardenal/Documents/Agente Personal/start_claudia.sh: Operation not permitted
+shell-init: error retrieving current directory: getcwd: cannot access parent directories: Operation not permitted
+/bin/bash: /Users/mercecardenal/Documents/Agente Personal/start_claudia.sh: Operation not permitted
+shell-init: error retrieving current directory: getcwd: cannot access parent directories: Operation not permitted
+/bin/bash: /Users/mercecardenal/Documents/Agente Personal/start_claudia.sh: Operation not permitted
+Fatal Python error: init_import_site: Failed to import the site module
+Python runtime state: initialized
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/site.py", line 621, in <module>
+    main()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/site.py", line 604, in main
+    known_paths = venv(known_paths)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/site.py", line 522, in venv
+    with open(virtual_conf, encoding='utf-8') as f:
+PermissionError: [Errno 1] Operation not permitted: '/Users/mercecardenal/Documents/Agente Personal/.venv/pyvenv.cfg'
+Traceback (most recent call last):
+  File "/Users/mercecardenal/claudia/run.py", line 4, in <module>
+    from dotenv import load_dotenv
+ModuleNotFoundError: No module named 'dotenv'
+Traceback (most recent call last):
+  File "/Users/mercecardenal/claudia/run.py", line 4, in <module>
+    from dotenv import load_dotenv
+ModuleNotFoundError: No module named 'dotenv'
+/Users/mercecardenal/claudia/.venv/lib/python3.9/site-packages/google/auth/__init__.py:54: FutureWarning: You are using a Python version 3.9 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+  warnings.warn(eol_message.format("3.9"), FutureWarning)
+/Users/mercecardenal/claudia/.venv/lib/python3.9/site-packages/google/oauth2/__init__.py:40: FutureWarning: You are using a Python version 3.9 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+  warnings.warn(eol_message.format("3.9"), FutureWarning)
+2026-05-28 16:47:59,638 — pyngrok.ngrok — INFO — Opening tunnel named: http-5001-6c9e28d3-9c2a-47fd-9f7f-477a30b8072e
+2026-05-28 16:47:59,816 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:47:59+0200 lvl=info msg="no configuration paths supplied"
+2026-05-28 16:47:59,816 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:47:59+0200 lvl=info msg="using configuration at default config path" path="/Users/mercecardenal/Library/Application Support/ngrok/ngrok.yml"
+2026-05-28 16:47:59,816 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:47:59+0200 lvl=info msg="open config file" path="/Users/mercecardenal/Library/Application Support/ngrok/ngrok.yml" err=nil
+2026-05-28 16:47:59,817 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:47:59+0200 lvl=info msg="FIPS 140 mode" enabled=false
+2026-05-28 16:47:59,860 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:47:59+0200 lvl=info msg="starting web service" obj=web addr=127.0.0.1:4040 allow_hosts=[]
+2026-05-28 16:48:00,337 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:00+0200 lvl=info msg="update available" obj=updater
+2026-05-28 16:48:00,488 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:00+0200 lvl=info msg="client session established" obj=tunnels.session
+2026-05-28 16:48:00,488 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:00+0200 lvl=info msg="tunnel session started" obj=tunnels.session
+2026-05-28 16:48:00,511 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:00+0200 lvl=info msg=start pg=/api/tunnels id=87fed2724aceb9a0
+2026-05-28 16:48:00,511 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:00+0200 lvl=info msg=end pg=/api/tunnels id=87fed2724aceb9a0 status=200 dur=258.5µs
+2026-05-28 16:48:00,512 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:00+0200 lvl=info msg=start pg=/api/tunnels id=8cb929d1f13203ec
+2026-05-28 16:48:00,512 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:00+0200 lvl=info msg=end pg=/api/tunnels id=8cb929d1f13203ec status=200 dur=74.167µs
+2026-05-28 16:48:00,513 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:00+0200 lvl=info msg=start pg=/api/tunnels id=b21afba92bca8c45
+2026-05-28 16:48:00,513 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:00+0200 lvl=info msg=end pg=/api/tunnels id=b21afba92bca8c45 status=200 dur=72.208µs
+2026-05-28 16:48:00,514 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:00+0200 lvl=info msg=start pg=/api/tunnels id=0d80d0812eab6455
+2026-05-28 16:48:00,993 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:00+0200 lvl=info msg="started tunnel" obj=tunnels name=http-5001-6c9e28d3-9c2a-47fd-9f7f-477a30b8072e addr=http://localhost:5001 url=https://jokester-acts-ranging.ngrok-free.dev
+2026-05-28 16:48:00,994 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:00+0200 lvl=info msg=end pg=/api/tunnels id=0d80d0812eab6455 status=201 dur=478.839084ms
+2026-05-28 16:48:00,994 — claudia.bot — INFO — ngrok tunnel: https://jokester-acts-ranging.ngrok-free.dev
+2026-05-28 16:48:00,994 — claudia.bot — INFO — Webhook URL para Twilio: https://jokester-acts-ranging.ngrok-free.dev/webhook
+2026-05-28 16:48:00,994 — claudia.bot — INFO — Claudia esta online (WhatsApp).
+ * Serving Flask app 'claudia.bot'
+ * Debug mode: off
+2026-05-28 16:48:01,025 — werkzeug — INFO — [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.100.14:5001
+2026-05-28 16:48:01,025 — werkzeug — INFO — [33mPress CTRL+C to quit[0m
+/Users/mercecardenal/claudia/.venv/lib/python3.9/site-packages/google/auth/__init__.py:54: FutureWarning: You are using a Python version 3.9 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+  warnings.warn(eol_message.format("3.9"), FutureWarning)
+/Users/mercecardenal/claudia/.venv/lib/python3.9/site-packages/google/oauth2/__init__.py:40: FutureWarning: You are using a Python version 3.9 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+  warnings.warn(eol_message.format("3.9"), FutureWarning)
+2026-05-28 16:48:08,808 — pyngrok.ngrok — INFO — Opening tunnel named: http-5001-870d767e-319f-4c64-b8b7-161c08a98230
+2026-05-28 16:48:08,831 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:08+0200 lvl=info msg="no configuration paths supplied"
+2026-05-28 16:48:08,832 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:08+0200 lvl=info msg="using configuration at default config path" path="/Users/mercecardenal/Library/Application Support/ngrok/ngrok.yml"
+2026-05-28 16:48:08,832 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:08+0200 lvl=info msg="open config file" path="/Users/mercecardenal/Library/Application Support/ngrok/ngrok.yml" err=nil
+2026-05-28 16:48:08,832 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:08+0200 lvl=info msg="FIPS 140 mode" enabled=false
+2026-05-28 16:48:08,860 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:08+0200 lvl=info msg="starting web service" obj=web addr=127.0.0.1:4040 allow_hosts=[]
+2026-05-28 16:48:09,171 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:09+0200 lvl=info msg="update available" obj=updater
+2026-05-28 16:48:09,382 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:09+0200 lvl=info msg="client session established" obj=tunnels.session
+2026-05-28 16:48:09,383 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:09+0200 lvl=info msg="tunnel session started" obj=tunnels.session
+2026-05-28 16:48:09,399 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:09+0200 lvl=info msg=start pg=/api/tunnels id=608e4d03d7a890af
+2026-05-28 16:48:09,400 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:09+0200 lvl=info msg=end pg=/api/tunnels id=608e4d03d7a890af status=200 dur=353.208µs
+2026-05-28 16:48:09,401 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:09+0200 lvl=info msg=start pg=/api/tunnels id=345e031698e83860
+2026-05-28 16:48:09,402 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:09+0200 lvl=info msg=end pg=/api/tunnels id=345e031698e83860 status=200 dur=118.291µs
+2026-05-28 16:48:09,403 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:09+0200 lvl=info msg=start pg=/api/tunnels id=52ab236666306cef
+2026-05-28 16:48:09,404 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:09+0200 lvl=info msg=end pg=/api/tunnels id=52ab236666306cef status=200 dur=114.583µs
+2026-05-28 16:48:09,405 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:09+0200 lvl=info msg=start pg=/api/tunnels id=fee7a6d6cbb3e494
+2026-05-28 16:48:09,906 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:09+0200 lvl=info msg="started tunnel" obj=tunnels name=http-5001-870d767e-319f-4c64-b8b7-161c08a98230 addr=http://localhost:5001 url=https://jokester-acts-ranging.ngrok-free.dev
+2026-05-28 16:48:09,907 — pyngrok.process.ngrok — INFO — t=2026-05-28T16:48:09+0200 lvl=info msg=end pg=/api/tunnels id=fee7a6d6cbb3e494 status=201 dur=499.890458ms
+2026-05-28 16:48:09,908 — claudia.bot — INFO — ngrok tunnel: https://jokester-acts-ranging.ngrok-free.dev
+2026-05-28 16:48:09,908 — claudia.bot — INFO — Webhook URL para Twilio: https://jokester-acts-ranging.ngrok-free.dev/webhook
+2026-05-28 16:48:09,908 — claudia.bot — INFO — Claudia esta online (WhatsApp).
+ * Serving Flask app 'claudia.bot'
+ * Debug mode: off
+2026-05-28 16:48:09,936 — werkzeug — INFO — [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://192.168.100.14:5001
+2026-05-28 16:48:09,936 — werkzeug — INFO — [33mPress CTRL+C to quit[0m

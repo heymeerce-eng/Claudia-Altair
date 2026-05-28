@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="base.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="brand">{{ identity.name }}</div>
+    <div class="tagline">Presupuesto de servicios</div>
+  </div>
+
+  <div class="accent-line"></div>
+
+  <div class="title-band">
+    <div class="doc-type">Presupuesto</div>
+    <h1>{{ title }}</h1>
+  </div>
+
+  <div class="meta">
+    {% if recipient %}
+    <div class="to-block">
+      <label>Para</label>
+      <div class="value">{{ recipient }}</div>
+    </div>
+    {% endif %}
+    <div class="date-block">
+      <label>Fecha</label>
+      <div class="value">{{ date }}</div>
+    </div>
+  </div>
+
+  <div class="content">
+    {{ content | safe }}
+  </div>
+
+  <div class="footer">
+    <div class="contact">
+      {{ identity.email }}
+      {% if identity.phone %} · {{ identity.phone }}{% endif %}
+      {% if identity.website %} · {{ identity.website }}{% endif %}
+    </div>
+    <div class="page-num">Presupuesto válido 30 días</div>
+  </div>
+
+</div>
+</body>
+</html>

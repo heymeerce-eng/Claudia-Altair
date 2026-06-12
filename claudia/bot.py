@@ -334,36 +334,44 @@ def health():
 
 @app.route("/debug/profiles")
 def debug_profiles():
-    """Shows loaded user profiles (safe info only). Use to verify Railway env vars."""
+    """Dumps all USER_N_* env vars as Railway sees them, plus loaded profiles."""
     from .users import _normalize_whatsapp
+
+    FIELDS = ["NAME", "WHATSAPP", "ROLE", "INSTAGRAM", "TARGET_PROGRAM",
+              "ICLOUD_EMAIL", "ICLOUD_PASSWORD", "ZOOM_EMAIL"]
+    REDACTED = {"ICLOUD_PASSWORD"}
+
+    # Scan all USER_N blocks regardless of whether they loaded correctly
+    raw_vars = {}
+    for i in range(1, 10):
+        block = {}
+        found_any = False
+        for field in FIELDS:
+            key = f"USER_{i}_{field}"
+            val = os.environ.get(key)
+            if val is not None:
+                found_any = True
+            if field in REDACTED:
+                block[key] = "SET" if (val and val != "xxxx-xxxx-xxxx-xxxx") else ("PLACEHOLDER" if val == "xxxx-xxxx-xxxx-xxxx" else "NOT SET")
+            else:
+                block[key] = val if val is not None else "NOT SET"
+        if found_any:
+            raw_vars[f"USER_{i}"] = block
+
+    # Loaded profiles (from cache)
     profiles = get_all_profiles()
-    result = {}
+    loaded = {}
     for number, p in profiles.items():
-        result[number] = {
+        loaded[number] = {
             "name": p.name,
-            "normalized_number": _normalize_whatsapp(number),
+            "normalized": _normalize_whatsapp(number),
             "has_calendar": p.has_calendar(),
-            "icloud_email": p.icloud_email or "NOT SET",
-            "icloud_password_set": bool(p.icloud_password and p.icloud_password != "xxxx-xxxx-xxxx-xxxx"),
-            "zoom_email": p.zoom_email or "NOT SET",
         }
 
-    # Also scan env vars to detect users defined but not loaded
-    missing = []
-    i = 1
-    while True:
-        name = os.environ.get(f"USER_{i}_NAME")
-        if not name:
-            break
-        whatsapp = os.environ.get(f"USER_{i}_WHATSAPP", "").strip()
-        if not whatsapp:
-            missing.append({"index": i, "name": name, "problem": f"USER_{i}_WHATSAPP not set"})
-        i += 1
-
     return {
-        "profiles_loaded": len(result),
-        "profiles": result,
-        "missing_whatsapp": missing,
+        "profiles_loaded": len(loaded),
+        "loaded_profiles": loaded,
+        "raw_env_vars": raw_vars,
     }
 
 

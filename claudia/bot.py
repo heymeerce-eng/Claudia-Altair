@@ -127,6 +127,10 @@ def webhook():
 
     user_id = hash(from_number)
     user = get_profile(from_number)
+    if user:
+        logger.info(f"Recognized user: {user.name} ({from_number})")
+    else:
+        logger.warning(f"Unknown number: {from_number} — check USER_N_WHATSAPP vars in Railway")
     history = get_history(user_id, limit=10)
     save_message(user_id, "user", body)
 

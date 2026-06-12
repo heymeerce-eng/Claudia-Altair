@@ -65,11 +65,27 @@ def load_profiles() -> Dict[str, UserProfile]:
 _PROFILES: Optional[Dict[str, UserProfile]] = None
 
 
+def _normalize_whatsapp(number: str) -> str:
+    """Returns 'whatsapp:+XXXXXXXXXXX' with no spaces."""
+    n = number.strip().replace(" ", "").replace("-", "")
+    if not n.startswith("whatsapp:"):
+        n = "whatsapp:" + n
+    return n.lower()
+
+
 def get_profile(whatsapp_number: str) -> Optional[UserProfile]:
     global _PROFILES
     if _PROFILES is None:
         _PROFILES = load_profiles()
-    return _PROFILES.get(whatsapp_number)
+    # Exact match first
+    if whatsapp_number in _PROFILES:
+        return _PROFILES[whatsapp_number]
+    # Normalized match (handles format differences from Twilio)
+    normalized = _normalize_whatsapp(whatsapp_number)
+    for key, profile in _PROFILES.items():
+        if _normalize_whatsapp(key) == normalized:
+            return profile
+    return None
 
 
 def get_all_profiles() -> Dict[str, UserProfile]:

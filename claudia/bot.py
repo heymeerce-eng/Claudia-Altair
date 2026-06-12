@@ -332,6 +332,24 @@ def health():
     return {"status": "ok", "agent": "Claudia"}
 
 
+@app.route("/debug/profiles")
+def debug_profiles():
+    """Shows loaded user profiles (safe info only). Use to verify Railway env vars."""
+    profiles = get_all_profiles()
+    result = {}
+    for number, p in profiles.items():
+        from .users import _normalize_whatsapp
+        result[number] = {
+            "name": p.name,
+            "normalized_number": _normalize_whatsapp(number),
+            "has_calendar": p.has_calendar(),
+            "icloud_email": p.icloud_email or "NOT SET",
+            "icloud_password_set": bool(p.icloud_password and p.icloud_password != "xxxx-xxxx-xxxx-xxxx"),
+            "zoom_email": p.zoom_email or "NOT SET",
+        }
+    return {"profiles_loaded": len(result), "profiles": result}
+
+
 def run_bot():
     init_db()
     DOCS_DIR.mkdir(exist_ok=True)

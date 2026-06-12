@@ -23,7 +23,8 @@ class UserProfile:
         return self.name.split()[0]
 
     def has_calendar(self) -> bool:
-        return bool(self.icloud_email and self.icloud_password)
+        pw = self.icloud_password or ""
+        return bool(self.icloud_email and pw and pw != "xxxx-xxxx-xxxx-xxxx")
 
     def content_context(self) -> str:
         """Returns a brief context string for the agent system prompt."""

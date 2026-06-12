@@ -1,10 +1,13 @@
 import os
+import logging
 import caldav
 import pytz
 from datetime import datetime, timedelta
 from icalendar import Calendar, Event
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import uuid
+
+logger = logging.getLogger(__name__)
 
 
 def _get_client(email: str = None, password: str = None):
@@ -77,8 +80,8 @@ def get_events(start_date: str, end_date: str,
                                     lines.append(line)
                     except Exception:
                         continue
-            except Exception:
-                pass
+            except Exception as cal_err:
+                logger.warning(f"Error fetching calendar '{cal_name}': {cal_err}")
             return lines
 
         result = []

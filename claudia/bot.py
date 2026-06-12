@@ -335,10 +335,10 @@ def health():
 @app.route("/debug/profiles")
 def debug_profiles():
     """Shows loaded user profiles (safe info only). Use to verify Railway env vars."""
+    from .users import _normalize_whatsapp
     profiles = get_all_profiles()
     result = {}
     for number, p in profiles.items():
-        from .users import _normalize_whatsapp
         result[number] = {
             "name": p.name,
             "normalized_number": _normalize_whatsapp(number),
@@ -347,7 +347,24 @@ def debug_profiles():
             "icloud_password_set": bool(p.icloud_password and p.icloud_password != "xxxx-xxxx-xxxx-xxxx"),
             "zoom_email": p.zoom_email or "NOT SET",
         }
-    return {"profiles_loaded": len(result), "profiles": result}
+
+    # Also scan env vars to detect users defined but not loaded
+    missing = []
+    i = 1
+    while True:
+        name = os.environ.get(f"USER_{i}_NAME")
+        if not name:
+            break
+        whatsapp = os.environ.get(f"USER_{i}_WHATSAPP", "").strip()
+        if not whatsapp:
+            missing.append({"index": i, "name": name, "problem": f"USER_{i}_WHATSAPP not set"})
+        i += 1
+
+    return {
+        "profiles_loaded": len(result),
+        "profiles": result,
+        "missing_whatsapp": missing,
+    }
 
 
 def run_bot():

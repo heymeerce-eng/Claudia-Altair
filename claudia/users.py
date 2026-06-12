@@ -3,8 +3,11 @@ Gestión de perfiles de usuario.
 Carga los perfiles desde variables de entorno con prefijo USER_N_.
 """
 import os
+import logging
 from dataclasses import dataclass, field
 from typing import Optional, Dict
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -48,17 +51,24 @@ def load_profiles() -> Dict[str, UserProfile]:
         if not name:
             break
         whatsapp = os.environ.get(f"USER_{i}_WHATSAPP", "").strip()
-        if whatsapp:
-            profiles[whatsapp] = UserProfile(
-                name=name,
-                whatsapp=whatsapp,
-                role=os.environ.get(f"USER_{i}_ROLE", "Socia de ALTAIR"),
-                instagram=os.environ.get(f"USER_{i}_INSTAGRAM"),
-                target_program=os.environ.get(f"USER_{i}_TARGET_PROGRAM"),
-                icloud_email=os.environ.get(f"USER_{i}_ICLOUD_EMAIL"),
-                icloud_password=os.environ.get(f"USER_{i}_ICLOUD_PASSWORD"),
-                zoom_email=os.environ.get(f"USER_{i}_ZOOM_EMAIL"),
+        if not whatsapp:
+            logger.error(
+                f"USER_{i}_NAME='{name}' está definido pero USER_{i}_WHATSAPP falta o está vacío "
+                f"— este perfil no se cargará. Añade USER_{i}_WHATSAPP en Railway."
             )
+            i += 1
+            continue
+        profiles[whatsapp] = UserProfile(
+            name=name,
+            whatsapp=whatsapp,
+            role=os.environ.get(f"USER_{i}_ROLE", "Socia de ALTAIR"),
+            instagram=os.environ.get(f"USER_{i}_INSTAGRAM"),
+            target_program=os.environ.get(f"USER_{i}_TARGET_PROGRAM"),
+            icloud_email=os.environ.get(f"USER_{i}_ICLOUD_EMAIL"),
+            icloud_password=os.environ.get(f"USER_{i}_ICLOUD_PASSWORD"),
+            zoom_email=os.environ.get(f"USER_{i}_ZOOM_EMAIL"),
+        )
+        logger.info(f"Perfil cargado: {name} ({whatsapp})")
         i += 1
     return profiles
 

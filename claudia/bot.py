@@ -258,6 +258,64 @@ def health():
     return {"status": "ok", "agent": "Claudia"}
 
 
+@app.route("/debug/google")
+def debug_google():
+    """Checks Google credentials status and Sheet connectivity."""
+    import json, base64 as b64mod
+    result = {}
+
+    creds_file = Path(__file__).parent.parent / "google_credentials.json"
+    result["creds_file_exists"] = creds_file.exists()
+    result["creds_file_path"] = str(creds_file)
+
+    b64_val = os.environ.get("GOOGLE_CREDENTIALS_BASE64", "").strip()
+    result["GOOGLE_CREDENTIALS_BASE64_set"] = bool(b64_val)
+    result["GOOGLE_CREDENTIALS_BASE64_length"] = len(b64_val)
+
+    # Try to decode on-the-fly if file missing
+    if not creds_file.exists() and b64_val:
+        try:
+            creds_file.write_bytes(b64mod.b64decode(b64_val))
+            result["decoded_and_written_now"] = True
+            result["creds_file_exists"] = True
+        except Exception as e:
+            result["decode_error"] = str(e)
+            return result, 500
+
+    if creds_file.exists():
+        try:
+            data = json.loads(creds_file.read_text())
+            result["service_account_email"] = data.get("client_email", "?")
+            result["project_id"] = data.get("project_id", "?")
+        except Exception as e:
+            result["json_parse_error"] = str(e)
+            return result, 500
+
+        try:
+            import gspread
+            from google.oauth2.service_account import Credentials
+            creds = Credentials.from_service_account_file(
+                str(creds_file), scopes=["https://www.googleapis.com/auth/spreadsheets"]
+            )
+            client = gspread.Client(auth=creds)
+            for label, id_key in [("CRM_VENTAS", "GOOGLE_SHEETS_CRM_ID"), ("CRM_ALUMNOS", "GOOGLE_SHEETS_STUDENTS_ID")]:
+                sid = os.environ.get(id_key, "")
+                if not sid:
+                    result[label] = f"{id_key} not set"
+                    continue
+                try:
+                    ss = client.open_by_key(sid)
+                    result[label] = {"status": "OK", "tabs": [ws.title for ws in ss.worksheets()]}
+                except Exception as e:
+                    result[label] = {"status": "ERROR", "error": str(e)}
+        except Exception as e:
+            result["gspread_error"] = str(e)
+    else:
+        result["error"] = "No credentials file and GOOGLE_CREDENTIALS_BASE64 not set"
+
+    return result
+
+
 @app.route("/debug/profiles")
 def debug_profiles():
     """Dumps all USER_N_* env vars as Railway sees them, plus loaded profiles."""

@@ -16,26 +16,27 @@ FIELD_ALIASES = {
     "nombre":            ["nombre", "alumno", "nombre completo"],
     "email":             ["email", "correo"],
     "telefono":          ["teléfono", "telefono", "tel", "móvil", "movil", "whatsapp"],
-    "fecha_pago":        ["fecha de pago", "fecha pago", "fecha ingreso", "fecha entrada"],
+    "fecha_pago":        ["fecha de pago", "fecha pago", "fecha ingreso", "fecha entrada", "fecha inicio"],
     "importe":           ["importe", "precio pagado", "precio", "cantidad"],
     "tipo_negocio":      ["tipo de negocio", "negocio", "actividad", "sector"],
     "contrato":          ["contrato firmado", "contrato"],
-    "proteccion_datos":  ["protección de datos", "proteccion de datos", "rgpd", "proteccion"],
+    "proteccion_datos":  ["protección de datos", "proteccion de datos", "rgpd", "proteccion de datos", "protección de datos"],
     "bienvenida":        ["bienvenida enviada", "bienvenida"],
     "estado":            ["estado"],
     "fecha_fin":         ["fecha fin", "fecha de fin", "fecha finalización", "fecha finalizacion"],
-    "notas_alumno":      ["notas del alumno", "📝 notas", "notas alumno", "notas"],
+    "notas_alumno":      ["notas del alumno", "notas alumno"],
     "alerta_renovacion": ["alerta renovación", "alerta renovacion", "⚠️ alerta", "alerta"],
     "skool_activo":      ["skool activado", "skool activo", "acceso skool", "skool"],
     "skool_fecha":       ["fecha activación skool", "fecha skool", "activación skool", "fecha activacion"],
+    "setter":            ["setter", "quien la lleva", "responsable", "quién la lleva"],
 }
 
 SESSION_ALIASES = {
-    "s1": ["s1", "sesión 1", "sesion 1", "onboarding", "1"],
-    "s2": ["s2", "sesión 2", "sesion 2", "estratégica 1", "estrategica 1", "2"],
-    "s3": ["s3", "sesión 3", "sesion 3", "estratégica 2", "estrategica 2", "3"],
-    "s4": ["s4", "sesión 4", "sesion 4", "4"],
-    "s5": ["s5", "sesión 5", "sesion 5", "5"],
+    "s1": ["s1", "sesión 1", "sesion 1", "onboarding"],
+    "s2": ["s2", "sesión 2", "sesion 2", "estratégica 1", "estrategica 1", "estrat. 1"],
+    "s3": ["s3", "sesión 3", "sesion 3", "estratégica 2", "estrategica 2", "estrat. 2"],
+    "s4": ["s4", "sesión 4", "sesion 4", "estrat. 3"],
+    "s5": ["s5", "sesión 5", "sesion 5", "estrat. 4"],
 }
 
 
@@ -94,7 +95,7 @@ def _get_sheet(programa: str):
 def _build_col_map(headers: list) -> dict:
     col_map = {}
     for i, header in enumerate(headers):
-        h = header.lower().strip()
+        h = header.lower().strip().replace("\n", " ")
         for field, aliases in FIELD_ALIASES.items():
             if field not in col_map and any(a in h for a in aliases):
                 col_map[field] = i

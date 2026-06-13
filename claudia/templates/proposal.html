@@ -5,19 +5,27 @@
 <link rel="stylesheet" href="base.css">
 </head>
 <body>
+
+<div class="cover">
+  <div class="cover-top-rule"></div>
+  <div class="cover-bottom-rule"></div>
+  <div class="cover-academy">Altair Academy</div>
+  <div class="cover-inner">
+    <div class="cover-label">Propuesta de contenido</div>
+    <div class="cover-rule"></div>
+    <div class="cover-title">{{ title }}</div>
+    {% if recipient %}
+    <div class="cover-recipient">Para: {{ recipient }}</div>
+    {% endif %}
+  </div>
+  <div class="cover-footer">
+    <div class="cover-footer-main">Altair Academy — Material exclusivo para alumnas</div>
+    <div class="cover-footer-detail">{{ date }}{% if identity.email %} · {{ identity.email }}{% endif %}</div>
+  </div>
+</div>
+
 <div class="page">
-
-  <div class="header">
-    <div class="brand">{{ identity.name }}</div>
-    <div class="tagline">Creadora de contenido &amp; estrategia</div>
-  </div>
-
-  <div class="accent-line"></div>
-
-  <div class="title-band">
-    <div class="doc-type">Propuesta de contenido</div>
-    <h1>{{ title }}</h1>
-  </div>
+  <div class="page-header"></div>
 
   <div class="meta">
     {% if recipient %}
@@ -37,14 +45,10 @@
   </div>
 
   <div class="footer">
-    <div class="contact">
-      {{ identity.email }}
-      {% if identity.phone %} · {{ identity.phone }}{% endif %}
-      {% if identity.website %} · {{ identity.website }}{% endif %}
-    </div>
-    <div class="page-num">Propuesta confidencial</div>
+    <div class="footer-left">Altair Academy — Material exclusivo para alumnas</div>
+    <div class="footer-right">Propuesta confidencial · Pág. 1</div>
   </div>
-
 </div>
+
 </body>
 </html>

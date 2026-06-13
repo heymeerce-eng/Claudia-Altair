@@ -22,7 +22,7 @@ from .tools.crm_tool import (
     search_lead, create_lead as crm_create, update_lead as crm_update,
     list_leads, get_followups_today,
 )
-from .tools.calendly_tool import get_upcoming_sessions, get_past_sessions, export_sessions_to_sheet
+
 from .tools.students_tool import (
     search_student, create_student, update_student,
     add_session, add_student_note, get_renewal_alerts,
@@ -163,28 +163,6 @@ TOOLS = [
                 },
             },
             "required": ["title", "slides"],
-        },
-    },
-    {
-        "name": "ver_sesiones_calendly",
-        "description": (
-            "Muestra las sesiones de Calendly con nombre, teléfono, Instagram y setter. "
-            "Usa 'proximas' para ver las que están por venir, 'pasadas' para las últimas."
-        ),
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "tipo": {
-                    "type": "string",
-                    "enum": ["proximas", "pasadas"],
-                    "description": "'proximas' para ver agenda futura, 'pasadas' para ver sesiones recientes",
-                },
-                "dias": {
-                    "type": "integer",
-                    "description": "Cuántos días hacia adelante o atrás buscar (por defecto 7)",
-                },
-            },
-            "required": ["tipo"],
         },
     },
     {
@@ -360,28 +338,6 @@ TOOLS = [
         "input_schema": {"type": "object", "properties": {}, "required": []},
     },
     {
-        "name": "exportar_calendly_sheet",
-        "description": (
-            "Exporta TODAS las sesiones pasadas de Calendly (con nombre, email, teléfono, Instagram y notas del formulario) "
-            "a una hoja de Google Sheets. Úsalo cuando pidan 'vuelca las sesiones de Calendly', "
-            "'exporta los leads de Calendly', 'rellena la hoja de Calendly' o similar."
-        ),
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "sheet_name": {
-                    "type": "string",
-                    "description": "Nombre exacto de la hoja en Google Sheets (por defecto 'Leads calendly')",
-                },
-                "dias": {
-                    "type": "integer",
-                    "description": "Cuántos días hacia atrás buscar (por defecto 730 = 2 años)",
-                },
-            },
-            "required": [],
-        },
-    },
-    {
         "name": "backfill_zoom_crm",
         "description": (
             "Importa todas las sesiones de Zoom grabadas al CRM: crea leads nuevos si no existen "
@@ -514,7 +470,7 @@ CUÁNDO USAR EL CRM:
 - Cuando mencionen a alguien → buscar_lead o buscar_alumno (solo leer)
 - "¿Qué tengo hoy?" / "¿A quién escribo?" / "seguimientos" → ver_seguimientos (incluye ventas + alumnos)
 - "¿Cómo está el pipeline?" → listar_leads
-- "¿Qué sesiones tenemos?" → ver_sesiones_calendly
+
 - Solo si piden explícitamente → crear_lead, actualizar_lead, crear_alumno, registrar_sesion
 
 FLUJO ZOOM → CRM:
@@ -729,12 +685,6 @@ def _execute_tool(tool_name: str, tool_input: dict,
         )
         return result, None
 
-    if tool_name == "ver_sesiones_calendly":
-        dias = tool_input.get("dias", 7)
-        if tool_input.get("tipo") == "pasadas":
-            return get_past_sessions(days=dias), None
-        return get_upcoming_sessions(days=dias), None
-
     if tool_name == "buscar_lead":
         return search_lead(tool_input["query"]), None
 
@@ -786,12 +736,6 @@ def _execute_tool(tool_name: str, tool_input: dict,
 
     if tool_name == "alertas_renovacion":
         return get_renewal_alerts(), None
-
-    if tool_name == "exportar_calendly_sheet":
-        return export_sessions_to_sheet(
-            sheet_name=tool_input.get("sheet_name", "Leads calendly"),
-            days=tool_input.get("dias", 730),
-        ), None
 
     if tool_name == "backfill_zoom_crm":
         dias = tool_input.get("dias", 90)

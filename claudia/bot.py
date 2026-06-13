@@ -145,82 +145,8 @@ def webhook():
     return str(resp)
 
 
-@app.route("/calendly", methods=["POST"])
-def calendly_webhook():
-    """Auto-creates a CRM lead when someone books a Calendly call."""
-    try:
-        data = request.get_json(silent=True) or {}
-        event_type = data.get("event", "")
-
-        if event_type != "invitee.created":
-            return "", 200
-
-        payload = data.get("payload", {})
-        invitee = payload.get("invitee", {})
-        scheduled = payload.get("scheduled_event", {})
-
-        name = invitee.get("name", "")
-        email = invitee.get("email", "")
-        call_name = scheduled.get("name", "Llamada de claridad")
-        start_time = scheduled.get("start_time", "")
-
-        # Parse custom questions (phone, instagram, etc.)
-        telefono = ""
-        instagram = ""
-        notas_extra = []
-        for qa in invitee.get("questions_and_answers", []):
-            q = qa.get("question", "").lower()
-            a = qa.get("answer", "")
-            if not a:
-                continue
-            if any(k in q for k in ["telefono", "teléfono", "phone", "whatsapp", "número", "numero"]):
-                telefono = a
-            elif any(k in q for k in ["instagram", "ig", "@"]):
-                instagram = a if a.startswith("@") else f"@{a}"
-            else:
-                notas_extra.append(f"{qa.get('question', '')}: {a}")
-
-        # Format date
-        fecha = ""
-        if start_time:
-            try:
-                from datetime import datetime
-                import pytz
-                tz = pytz.timezone("Europe/Madrid")
-                dt = datetime.strptime(start_time[:19], "%Y-%m-%dT%H:%M:%S")
-                dt = pytz.utc.localize(dt).astimezone(tz)
-                fecha = dt.strftime("%d/%m/%Y %H:%M")
-            except Exception:
-                fecha = start_time[:10]
-
-        notas = f"Reserva via Calendly: {call_name}"
-        if fecha:
-            notas += f" — {fecha}"
-        if notas_extra:
-            notas += " | " + " | ".join(notas_extra)
-
-        if instagram:
-            notas += f" | IG: {instagram}"
-
-        if name:
-            result = crm_create_lead(
-                nombre=name,
-                email=email,
-                telefono=telefono,
-                fecha_sesion=fecha,
-                notas=notas,
-                situacion_actual=f"Reserva via Calendly: {call_name}",
-            )
-            logger.info(f"Calendly lead created: {name} — {result}")
-
-    except Exception as e:
-        logger.error(f"Calendly webhook error: {e}", exc_info=True)
-
-    return "", 200
-
-
 def _extract_name_from_zoom_topic(topic: str) -> str:
-    """Extracts probable invitee name from a Calendly-generated Zoom topic."""
+    """Extracts probable invitee name from a Zoom meeting topic."""
     for pattern in [r"(?:con|with)\s+(.+?)(?:\s*[-—].*)?$", r"[-—]\s*(.+)$"]:
         m = re.search(pattern, topic, re.IGNORECASE)
         if m:

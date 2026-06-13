@@ -9,6 +9,15 @@ import uuid
 
 logger = logging.getLogger(__name__)
 
+DAYS_ES = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
+
+
+def _to_madrid(dt, tz_madrid):
+    """Converts a timezone-aware datetime to Madrid time. Returns date objects unchanged."""
+    if hasattr(dt, "hour") and hasattr(dt, "tzinfo") and dt.tzinfo is not None:
+        return dt.astimezone(tz_madrid)
+    return dt
+
 
 def _get_client(email: str = None, password: str = None):
     email = email or os.environ.get("ICLOUD_EMAIL", "")
@@ -66,11 +75,14 @@ def get_events(start_date: str, end_date: str,
                                 dtend = component.get("DTEND").dt
                                 location = str(component.get("LOCATION", ""))
                                 if hasattr(dtstart, "strftime"):
+                                    dtstart = _to_madrid(dtstart, tz)
+                                    dtend = _to_madrid(dtend, tz)
+                                    day_name = DAYS_ES[dtstart.weekday()]
                                     if hasattr(dtstart, "hour"):
-                                        start_str = dtstart.strftime("%d/%m/%Y %H:%M")
+                                        start_str = f"{day_name} {dtstart.strftime('%d/%m/%Y %H:%M')}"
                                         end_str = dtend.strftime("%H:%M") if hasattr(dtend, "hour") else ""
                                     else:
-                                        start_str = dtstart.strftime("%d/%m/%Y")
+                                        start_str = f"{day_name} {dtstart.strftime('%d/%m/%Y')}"
                                         end_str = "(todo el día)"
                                     line = f"• [{cal_name}] {summary} — {start_str}"
                                     if end_str:
